@@ -1,16 +1,17 @@
 // --- YENİLENMİŞ FIREBASE ENTEGRASYONU ---
 import { initializeApp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { 
-    getAuth, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
-    sendEmailVerification, 
-    sendPasswordResetEmail, 
-    GoogleAuthProvider, 
-    signInWithPopup, 
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    sendEmailVerification,
+    sendPasswordResetEmail,
+    GoogleAuthProvider,
+    signInWithPopup,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { firebaseConfig } from '../services/firebaseConfig.js';
 
 // Global değişkenler
 let auth;
@@ -36,15 +37,6 @@ function main() {
     // --------------------------------------------------------------------------
     // BİLGİLERİN GÜNCELLENDİ
     // --------------------------------------------------------------------------
-    const firebaseConfig = {
-        apiKey: "AIzaSyBT4Dd62CBQDrOQYCdR4hDfKjnONFH2D-s",
-        authDomain: "asyamed-b4c27.firebaseapp.com",
-        projectId: "asyamed-b4c27",
-        storageBucket: "asyamed-b4c27.firebasestorage.app",
-        messagingSenderId: "720925032297",
-        appId: "1:720925032297:web:ca31e2630f9f42a9f5c7f8"
-    };
-
     // Firebase servislerini başlat
     const app = initializeApp(firebaseConfig);
     auth = getAuth(app);

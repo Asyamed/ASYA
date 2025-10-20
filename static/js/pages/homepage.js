@@ -4,21 +4,13 @@ import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/fi
 import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 // --- YENİ: MODÜLLERİ İÇERİ AKTAR ---
-import dashboardModule from './modules/dashboard.js';
-import studyAssistantModule from './modules/study_assistant.js';
-import libraryModule from './modules/library.js';
-import gpaPlannerModule from './modules/gpa_planner.js';
-import aiAssistantDoctorModule from './modules/ai_assistant_doctor.js';
-import llmChatModule from './modules/llm_chat.js';
-
-const firebaseConfig = {
-    apiKey: "AIzaSyBT4Dd62CBQDrOQYCdR4hDfKjnONFH2D-s",
-    authDomain: "asyamed-b4c27.firebaseapp.com",
-    projectId: "asyamed-b4c27",
-    storageBucket: "asyamed-b4c27.firebasestorage.app",
-    messagingSenderId: "720925032297",
-    appId: "1:720925032297:web:ca31e2630f9f42a9f5c7f8"
-};
+import dashboardModule from '../widgets/dashboard.js';
+import studyAssistantModule from '../widgets/study_assistant.js';
+import libraryModule from '../widgets/library.js';
+import gpaPlannerModule from '../widgets/gpa_planner.js';
+import aiAssistantDoctorModule from '../widgets/ai_assistant_doctor.js';
+import llmChatModule from '../widgets/llm_chat.js';
+import { firebaseConfig } from '../services/firebaseConfig.js';
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

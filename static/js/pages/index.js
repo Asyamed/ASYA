@@ -1,7 +1,7 @@
-// --- Sayfa Yüklendiğinde En Üste Kaydır ---
-window.onload = function() {
-    window.scrollTo(0, 0);
-};
+import { scrollToTopOnLoad } from '../utils/dom.js';
+import { setupModal } from '../utils/modal.js';
+
+scrollToTopOnLoad();
 
 // --- 3D Arka Plan Animasyonu ---
 const container = document.getElementById('scene-container');
@@ -68,28 +68,6 @@ function animate() {
 if (container) {
     init();
     animate();
-}
-
-// --- Modal Kontrolü ---
-function setupModal(buttonId, overlayId, closeButtonId) {
-    const button = document.getElementById(buttonId);
-    const buttonFooter = document.getElementById(buttonId + '-footer'); // Footer'daki buton için
-    const overlay = document.getElementById(overlayId);
-    const closeButton = document.getElementById(closeButtonId);
-
-    function openModal(e) {
-        if(e) e.preventDefault();
-        overlay.classList.add('active');
-    }
-    function closeModal() {
-        overlay.classList.remove('active');
-    }
-
-    if(button) button.addEventListener('click', openModal);
-    if(buttonFooter) buttonFooter.addEventListener('click', openModal);
-    if(closeButton) closeButton.addEventListener('click', closeModal);
-    if(overlay) overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeModal(); });
 }
 
 setupModal('about-btn', 'about-modal-overlay', 'close-about-modal');
