@@ -12,6 +12,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { firebaseConfig } from '../services/firebaseConfig.js';
+import { runValidations, focusFirstError, clearValidationMessages } from '../utils/formUtils.js';
+import { syncAuthState } from '../services/api.js';
 
 // Global değişkenler
 let auth;
@@ -31,6 +33,7 @@ const dynamicForm = document.getElementById('dynamic-form');
 const registerTitle = document.getElementById('register-title');
 const registerSubtitle = document.getElementById('register-subtitle');
 const messageModal = document.getElementById('message-modal-overlay');
+const errorContainers = ['login-error', 'register-error', 'reset-error'];
 
 // Ana başlangıç fonksiyonu
 function main() {
@@ -132,9 +135,10 @@ function switchView(activeView) {
     activeView.classList.add('active');
     activeView.querySelectorAll('.fade-in').forEach(el => {
         el.style.animation = 'none';
-        el.offsetHeight; 
-        el.style.animation = null; 
+        el.offsetHeight;
+        el.style.animation = null;
     });
+    clearValidationMessages(errorContainers);
 }
 
 function showCustomMessage(title, message) {
@@ -171,15 +175,15 @@ function setupEventListeners() {
             let formHTML = '';
             if (!googleUserToCompleteProfile) {
                 formHTML += `
-                    <input type="email" id="register-email" placeholder="E-posta Adresi" class="form-input w-full p-3 rounded-lg text-white" required>
-                    <input type="password" id="register-password" placeholder="Şifre (en az 6 karakter)" class="form-input w-full p-3 rounded-lg text-white" required>`;
+                    <input type="email" id="register-email" name="email" placeholder="E-posta Adresi" class="form-input w-full p-3 rounded-lg text-white" required>
+                    <input type="password" id="register-password" name="password" placeholder="Şifre (en az 6 karakter)" class="form-input w-full p-3 rounded-lg text-white" required>`;
             }
             if (selectedRole === 'doctor') {
                 registerTitle.textContent = "Doktor Bilgileri";
                 registerSubtitle.textContent = "Lütfen bilgilerinizi girerek devam edin.";
                 formHTML += `
-                    <input type="text" id="register-hospital" placeholder="Çalıştığınız Hastane" class="form-input w-full p-3 rounded-lg text-white" required>
-                    <select id="register-department" class="form-input w-full p-3 rounded-lg text-white appearance-none" required>
+                    <input type="text" id="register-hospital" name="hospital" placeholder="Çalıştığınız Hastane" class="form-input w-full p-3 rounded-lg text-white" required>
+                    <select id="register-department" name="department" class="form-input w-full p-3 rounded-lg text-white appearance-none" required>
                         <option value="" disabled selected>Bölümünüzü Seçin</option>
                         <option value="kardiyoloji">Kardiyoloji</option><option value="onkoloji">Onkoloji</option><option value="nöroloji">Nöroloji</option><option value="dahiliye">Dahiliye</option><option value="pediatri">Pediatri</option><option value="genel cerrahi">Genel Cerrahi</option><option value="diğer">Diğer</option>
                     </select>`;
@@ -187,8 +191,8 @@ function setupEventListeners() {
                 registerTitle.textContent = "Öğrenci Bilgileri";
                 registerSubtitle.textContent = "Lütfen bilgilerinizi girerek devam edin.";
                 formHTML += `
-                    <input type="text" id="register-city" placeholder="Yaşadığınız İl" class="form-input w-full p-3 rounded-lg text-white" required>
-                    <input type="text" id="register-university" placeholder="Öğrenim Gördüğünüz Üniversite" class="form-input w-full p-3 rounded-lg text-white" required>`;
+                    <input type="text" id="register-city" name="city" placeholder="Yaşadığınız İl" class="form-input w-full p-3 rounded-lg text-white" required>
+                    <input type="text" id="register-university" name="university" placeholder="Öğrenim Gördüğünüz Üniversite" class="form-input w-full p-3 rounded-lg text-white" required>`;
             }
             dynamicForm.innerHTML = formHTML;
             switchView(allViews.registerForm);
@@ -205,13 +209,34 @@ function setupEventListeners() {
 // Form İşleyici Fonksiyonlar
 async function handleLogin(e) {
     e.preventDefault();
+    clearValidationMessages(['login-error']);
+    const { isValid, errors } = runValidations([
+        {
+            field: 'login-email',
+            label: 'E-posta',
+            rules: ['required', 'email']
+        },
+        {
+            field: 'login-password',
+            label: 'Şifre',
+            rules: ['required']
+        }
+    ]);
+
+    if (!isValid) {
+        const [firstError] = errors;
+        showErrorMessage('login-error', firstError.message);
+        focusFirstError(errors);
+        return;
+    }
+
     setLoading(true);
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
-    document.getElementById('login-error').style.display = 'none';
 
     try {
         await signInWithEmailAndPassword(auth, email, password);
+        await syncAuthState('login', { provider: 'password' });
         // Başarılı girişten sonra `onAuthStateChanged` yönlendirmeyi yapacak.
     } catch (error) {
         console.error("Giriş hatası:", error);
@@ -223,9 +248,51 @@ async function handleLogin(e) {
 
 async function handleRegister(e) {
     e.preventDefault();
+    clearValidationMessages(['register-error']);
+
+    const validationConfig = [];
+
+    if (!selectedRole) {
+        showErrorMessage('register-error', 'Lütfen bir rol seçin ve formu yeniden gönderin.');
+        return;
+    }
+
+    if (!googleUserToCompleteProfile) {
+        validationConfig.push(
+            {
+                field: 'register-email',
+                label: 'E-posta',
+                rules: ['required', 'email']
+            },
+            {
+                field: 'register-password',
+                label: 'Şifre',
+                rules: ['required', { type: 'minLength', value: 6, message: 'Şifre en az 6 karakter olmalıdır.' }]
+            }
+        );
+    }
+
+    if (selectedRole === 'doctor') {
+        validationConfig.push(
+            { field: 'register-hospital', label: 'Hastane', rules: ['required'] },
+            { field: 'register-department', label: 'Bölüm', rules: ['required'] }
+        );
+    } else {
+        validationConfig.push(
+            { field: 'register-city', label: 'Şehir', rules: ['required'] },
+            { field: 'register-university', label: 'Üniversite', rules: ['required'] }
+        );
+    }
+
+    const { isValid, errors } = runValidations(validationConfig);
+    if (!isValid) {
+        const [firstError] = errors;
+        showErrorMessage('register-error', firstError.message);
+        focusFirstError(errors);
+        return;
+    }
+
     setLoading(true);
-    const errorEl = document.getElementById('register-error');
-    errorEl.style.display = 'none';
 
     try {
         let user;
@@ -247,6 +314,7 @@ async function handleRegister(e) {
                 userData.university = document.getElementById('register-university').value;
             }
             await setDoc(doc(db, "users", user.uid), userData);
+            await syncAuthState('register', { provider: 'google', role: selectedRole });
             googleUserToCompleteProfile = null;
             // Profil tamamlandığı için onAuthStateChanged tetiklenip yönlendirme yapacak.
             window.location.href = '/app';
@@ -272,6 +340,7 @@ async function handleRegister(e) {
             }
             await setDoc(doc(db, "users", user.uid), userData);
             await sendEmailVerification(user);
+            await syncAuthState('register', { provider: 'password', role: selectedRole });
             showCustomMessage("Kayıt Başarılı!", "Hesabınızı aktif etmek için lütfen e-posta adresinize gönderilen doğrulama linkine tıklayın.");
             switchView(allViews.login);
         }
@@ -291,6 +360,7 @@ async function handleGoogleSignIn() {
     const provider = new GoogleAuthProvider();
     try {
         await signInWithPopup(auth, provider);
+        await syncAuthState('login', { provider: 'google' });
         // Başarılı girişten sonra `onAuthStateChanged` süreci devralacak.
         // Eğer kullanıcı yeni ise, rol seçimine yönlendirecek.
     } catch (error) {
@@ -303,14 +373,30 @@ async function handleGoogleSignIn() {
 
 async function handlePasswordReset(e) {
     e.preventDefault();
+    clearValidationMessages(['reset-error']);
+
+    const { isValid, errors } = runValidations([
+        {
+            field: 'reset-email',
+            label: 'E-posta',
+            rules: ['required', 'email']
+        }
+    ]);
+
+    if (!isValid) {
+        const [firstError] = errors;
+        showErrorMessage('reset-error', firstError.message);
+        focusFirstError(errors);
+        return;
+    }
+
     setLoading(true);
     const email = document.getElementById('reset-email').value;
-    const errorEl = document.getElementById('reset-error');
-    errorEl.style.display = 'none';
 
     try {
         await sendPasswordResetEmail(auth, email);
         showCustomMessage("E-posta Gönderildi", "Eğer bu e-posta adresi kayıtlıysa, şifre sıfırlama linkini gönderdik.");
+        await syncAuthState('password-reset', { provider: 'password' });
         switchView(allViews.login);
     } catch (error) {
         console.error("Şifre sıfırlama hatası:", error);
