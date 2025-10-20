@@ -1,0 +1,136 @@
+:root {
+    --background: #050810; /* Daha derin bir siyah */
+    --card: rgba(17, 25, 40, 0.7);
+    --border: rgba(255, 255, 255, 0.125);
+    --text-primary: #E0E0E0;
+    --text-secondary: #a0aec0;
+    --accent: #38E5C6;
+    --glow-color: rgba(56, 229, 198, 0.15);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+#scene-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+}
+
+.accent-color { color: var(--accent); }
+
+.form-container {
+    background: var(--card);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--border);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.form-container:hover {
+    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5), 0 0 20px 0 var(--glow-color);
+    border-color: rgba(56, 229, 198, 0.25);
+}
+
+.form-input {
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    background-color: rgba(0,0,0,0.3);
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(56, 229, 198, 0.3);
+    outline: none;
+}
+
+.main-button {
+    background-color: var(--accent);
+    transition: all 0.3s ease;
+}
+
+.main-button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(56, 229, 198, 0.5);
+}
+
+.secondary-button {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Yenilenmiş Rol Kartı Stilleri */
+.role-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.role-card:hover {
+    border-color: var(--accent);
+    background-color: rgba(56, 229, 198, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px 0 var(--glow-color);
+}
+
+.role-card ul { list-style: none; padding: 0; }
+.role-card .continue-text { opacity: 0.8; transition: opacity 0.3s ease; }
+.role-card:hover .continue-text { opacity: 1; }
+
+/* Animasyonlar */
+.view { display: none; }
+.view.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.5s ease-out forwards; }
+
+/* Hata Mesajı Stili */
+.error-message {
+    background-color: rgba(255, 59, 48, 0.2);
+    border: 1px solid rgba(255, 59, 48, 0.5);
+    color: #FF453A;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    text-align: center;
+    display: none; /* Başlangıçta gizli */
+    margin-top: 1rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Modal Stilleri */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(5, 8, 16, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 40;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out;
+}
+
+.modal-overlay.active { opacity: 1; visibility: visible; }
+
+.modal-content {
+    background: rgba(17, 25, 40, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--border);
+    padding: 2rem; border-radius: 1rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    width: 90%; max-width: 400px; text-align: center;
+    transform: translateY(-20px); transition: transform 0.3s ease-in-out;
+}
+
+.modal-overlay.active .modal-content { transform: translateY(0); }

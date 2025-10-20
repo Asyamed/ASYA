@@ -1,0 +1,223 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}ASYA - Tıbbın Geleceği için Yapay Zeka{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- HERO BÖLÜMÜ -->
+        <section class="hero-wrapper">
+            <div class="left-pane text-center lg:text-left">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+                    Tıbbın Geleceğine <span class="accent-color">Yön Verin.</span>
+                </h1>
+                <p class="mt-4 text-lg text-gray-300 max-w-md mx-auto lg:mx-0">
+                    ASYA; doktorlar, tıp öğrencileri ve sağlık kurumları için tasarlanmış yapay zeka asistanıdır. Teşhise yardımcı olur, eğitimi destekler ve operasyonel verimliliği artırır.
+                </p>
+                <a href="/login" class="inline-block">
+                 <button id="login-register-btn" class="main-button bg-accent text-gray-900 font-bold py-3 px-10 rounded-full text-lg mt-8">
+                    Platforma Katılın
+                </button>
+                </a>
+                <p class="text-xs text-gray-500 mt-6 max-w-md mx-auto lg:mx-0">
+                    ASYA bir klinik karar destek aracıdır, teşhis koymaz. Nihai sorumluluk hekime aittir.
+                </p>
+            </div>
+            
+            <!-- SAĞ TARAF - DEMO VE KARTLAR -->
+            <div class="w-full mt-12 lg:mt-0 flex flex-col gap-6">
+                <!-- İNTERAKTİF DEMO BÖLÜMÜ -->
+                <div class="w-full feature-card card-hover rounded-2xl p-4 sm:p-6">
+                    <div class="flex flex-wrap gap-2 mb-4" id="demo-tabs">
+                        <button class="demo-tab active" data-tab="lung">Akciğer</button>
+                        <button class="demo-tab" data-tab="heart">Kalp</button>
+                        <button class="demo-tab" data-tab="brain">Beyin</button>
+                        <button class="demo-tab" data-tab="llm">LLM Sohbet</button>
+                        <button class="demo-tab" data-tab="student">Öğrenci</button>
+                    </div>
+                    <div id="demo-outlet">
+                        <!-- Demo içeriği buraya dinamik olarak eklenecek -->
+                    </div>
+                </div>
+
+                <!-- YENİ TANITIM KARTLARI -->
+                <div class="w-full feature-card card-hover rounded-2xl p-5 flex items-start gap-4">
+                     <div>
+                        <div class="flex items-center justify-center h-10 w-10 rounded-lg bg-gray-800 border border-gray-700">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white">Uygulamaya Genel Bakış</h4>
+                        <p class="text-sm text-gray-400 mt-1">ASYA'nın temel yeteneklerini, size ve kurumunuza nasıl değer katabileceğini keşfedin.</p>
+                    </div>
+                </div>
+                 <div class="w-full feature-card card-hover rounded-2xl p-5 flex items-start gap-4">
+                    <div>
+                        <div class="flex items-center justify-center h-10 w-10 rounded-lg bg-gray-800 border border-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white">Veri Güvenliği & Etik</h4>
+                        <p class="text-sm text-gray-400 mt-1">KVKK ve GDPR uyumlu, anonimleştirilmiş veri işleme yaklaşımımızla güvendesiniz.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROBLEM BÖLÜMÜ -->
+        <section class="content-section bg-opacity-20 bg-slate-900">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="section-title text-white">Tıbbın Karmaşıklığına <span class="accent-color">Modern Bir Çözüm</span></h2>
+                <p class="section-subtitle">Sağlık profesyonelleri ve öğrencileri her gün zaman, bilgi ve verimlilik zorluklarıyla karşılaşıyor. ASYA bu engelleri aşmak için tasarlandı.</p>
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <div class="text-center p-6">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-gray-800 border border-gray-700 mb-4 mx-auto"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                        <h3 class="text-xl font-bold">Zaman Baskısı</h3>
+                        <p class="text-gray-400 mt-2">Doktorlar, uzun raporlama süreçleri ve yoğun hasta trafiği arasında değerli zamanlarını kaybediyor.</p>
+                    </div>
+                    <div class="text-center p-6">
+                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-gray-800 border border-gray-700 mb-4 mx-auto"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg></div>
+                        <h3 class="text-xl font-bold">Bilgi Yığını</h3>
+                        <p class="text-gray-400 mt-2">Tıp öğrencileri, devasa bir bilgi havuzunda kayboluyor ve verimli çalışma yöntemleri bulmakta zorlanıyor.</p>
+                    </div>
+                    <div class="text-center p-6">
+                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-gray-800 border border-gray-700 mb-4 mx-auto"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg></div>
+                        <h3 class="text-xl font-bold">Operasyonel Verimsizlik</h3>
+                        <p class="text-gray-400 mt-2">Sağlık kurumları, hasta akışını optimize etmek ve kaynaklarını en verimli şekilde kullanmak için mücadele ediyor.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ÖZELLİKLER (DETAYLI) BÖLÜMÜ -->
+        <section id="features" class="content-section">
+            <div class="max-w-6xl mx-auto space-y-20">
+                <!-- Feature 1: Doktor -->
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="text-sm font-bold uppercase accent-color">DOKTORLAR İÇİN</span>
+                        <h3 class="text-3xl font-extrabold text-white mt-2">Klinik Süreçlerinizi Güçlendirin</h3>
+                        <p class="text-gray-300 mt-4 leading-relaxed">Yapay zeka destekli analizlerle karmaşık vakaları saniyeler içinde yorumlayın. ASYA, Akciğer, Kalp ve Beyin görüntülemelerinde potansiyel bulguları işaretleyerek size ikinci bir göz olur, standart rapor şablonlarıyla dokümantasyon yükünüzü hafifletir. Zamanınızı hastalarınıza, enerjinizi doğru teşhise ayırın.</p>
+                        <ul class="mt-6 space-y-3">
+                            <li class="flex items-start"><span class="accent-color mr-3 mt-1">&#10003;</span> <span>Anonimleştirilmiş Görüntü Analizi</span></li>
+                            <li class="flex items-start"><span class="accent-color mr-3 mt-1">&#10003;</span> <span>Otomatik Rapor Taslakları</span></li>
+                            <li class="flex items-start"><span class="accent-color mr-3 mt-1">&#10003;</span> <span>Tıbba Özel LLM ile Vaka Tartışması</span></li>
+                        </ul>
+                    </div>
+                    <div class="feature-card card-hover rounded-2xl p-4">
+                        <img src="https://placehold.co/600x400/0B1120/38E5C6?text=AI+Analiz+Aray%C3%BCz%C3%BC" alt="AI Analiz Arayüzü" class="rounded-lg w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- Feature 2: Öğrenci -->
+                 <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 md:order-1 feature-card card-hover rounded-2xl p-4">
+                        <img src="https://placehold.co/600x400/0B1120/38E5C6?text=Ak%C4%B1ll%C4%B1+Ders+Asistan%C4%B1" alt="Akıllı Ders Asistanı" class="rounded-lg w-full h-full object-cover">
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <span class="text-sm font-bold uppercase accent-color">TIP ÖĞRENCİLERİ İÇİN</span>
+                        <h3 class="text-3xl font-extrabold text-white mt-2">Öğrenme Tarzınızı Dönüştürün</h3>
+                        <p class="text-gray-300 mt-4 leading-relaxed">Ders notlarınızı, PDF'lerinizi ve kitaplarınızı kişisel bir öğrenme merkezine dönüştürün. ASYA, yüklediğiniz materyallerden özetler çıkarır, kilit kavramları açıklar ve size özel deneme sınavları hazırlar. Notlarınızı ve ders programınızı tek bir yerden yöneterek akademik hayatınızı kolaylaştırın.</p>
+                         <ul class="mt-6 space-y-3">
+                            <li class="flex items-start"><span class="accent-color mr-3 mt-1">&#10003;</span> <span>Yapay Zeka ile PDF Özetleme ve Soru Üretme</span></li>
+                            <li class="flex items-start"><span class="accent-color mr-3 mt-1">&#10003;</span> <span>Kişisel Not Depolama ve GPA Takibi</span></li>
+                            <li class="flex items-start"><span class="accent-color mr-3 mt-1">&#10003;</span> <span>Örnek TUS Sınavları Hazırlama</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KURUMSAL BÖLÜMÜ -->
+        <section id="institutional" class="content-section bg-opacity-20 bg-slate-900">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="text-sm font-bold uppercase accent-color">SAĞLIK KURUMLARI İÇİN</span>
+                        <h3 class="text-3xl font-extrabold text-white mt-2">Operasyonel Verimlilikte Devrim</h3>
+                        <p class="text-gray-300 mt-4 leading-relaxed">ASYA'nın Sesli Triaj özelliği ile hasta karşılama süreçlerinizi otomatikleştirin. Yapay zeka, randevu alan hastaları arayarak ön anamnez alır ve hekiminize yapılandırılmış bir rapor sunar. Bu sayede hekimleriniz hasta başına 15 dakikaya kadar zaman kazanır, kurumunuzun günlük hasta kapasitesi artar.</p>
+                        <p class="text-gray-300 mt-4 leading-relaxed">Kurumunuza özel çözümlerimiz hakkında bilgi almak ve Sesli Triaj özelliğini entegre etmek için bizimle iletişime geçin.</p>
+                    </div>
+                    <div class="feature-card card-hover rounded-2xl p-8">
+                        <h4 class="text-xl font-bold text-white text-center">İşbirliği Formu</h4>
+                        <form id="kurum-form" class="mt-6 space-y-4">
+                             <input type="text" name="kurum_adi" placeholder="Kurum Adı" class="form-input" required>
+                             <input type="text" name="yetkili_adi" placeholder="Yetkili Adı Soyadı" class="form-input" required>
+                             <input type="email" name="email" placeholder="E-posta Adresi" class="form-input" required>
+                             <div class="grid sm:grid-cols-2 gap-4">
+                                 <input type="number" name="doktor_sayisi" placeholder="Doktor Sayısı" class="form-input" required>
+                                 <input type="number" name="hasta_sayisi" placeholder="Günlük Hasta Sayısı" class="form-input" required>
+                             </div>
+                             <textarea name="notlar" placeholder="Ek notlarınız..." rows="3" class="form-input"></textarea>
+                             <button type="submit" class="main-button w-full bg-accent text-gray-900 font-bold py-3 px-6 rounded-lg text-base">Bilgi Almak İstiyorum</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GÜVENLİK BÖLÜMÜ -->
+        <section class="content-section">
+            <div class="max-w-4xl mx-auto text-center feature-card card-hover rounded-2xl p-10 lg:p-16">
+                 <div class="flex items-center justify-center h-20 w-20 rounded-full bg-gray-800 border-2 border-accent-color mb-6 mx-auto"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div>
+                 <h2 class="text-3xl font-extrabold text-white">Güvenliğiniz ve Mahremiyetiniz Önceliğimiz</h2>
+                 <p class="text-gray-300 mt-4 leading-relaxed max-w-2xl mx-auto">Tıbbi verilerin hassasiyetinin farkındayız. ASYA, tüm verileri KVKK ve GDPR standartlarına uygun olarak işler. Yüklenen tüm tıbbi görüntüler ve belgeler, sisteme alınmadan önce hasta kimlik bilgilerinden otomatik olarak arındırılır. Verileriniz, en üst düzey şifreleme yöntemleriyle korunur.</p>
+            </div>
+        </section>
+
+        <!-- SON ÇAĞRI (CTA) BÖLÜMÜ -->
+        <section class="content-section">
+             <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-4xl lg:text-5xl font-extrabold text-white">Tıbbın Geleceğini <span class="animated-gradient-text">Bugün Şekillendirin.</span></h2>
+                <p class="section-subtitle">Yapay zekanın gücünü kliniğinize ve eğitiminize taşıyın. Daha hızlı, daha verimli ve daha donanımlı bir tıp dünyası için ASYA topluluğuna katılın.</p>
+                 <a href="/login" class="inline-block">
+                 <button class="main-button bg-accent text-gray-900 font-bold py-4 px-12 rounded-full text-xl mt-10">
+                    Ücretsiz Başlayın
+                </button>
+                </a>
+            </div>
+        </section>
+
+    <!-- MODALS -->
+    <div id="about-modal-overlay" class="modal-overlay">
+        <div id="about-modal-container" class="modal-container">
+            <div class="p-8 text-white relative">
+                <button id="close-about-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors text-3xl">&times;</button>
+                <h2 class="text-2xl font-bold mb-4 accent-color">Vizyonumuz</h2>
+                <p class="text-gray-300 text-base leading-relaxed">ASYA'nın vizyonu, zaman ve mekan sınırı olmaksızın, her profesyonelin ve öğrencinin potansiyelini en üst düzeye çıkarmasına yardımcı olan, vazgeçilmez bir küresel platform haline gelmektir.<br><br>Tıp alanındaki bu ilk adımla, sağlık ekosisteminde bir devrim yaratmayı hedefliyoruz. Nihai amacımız, bu başarıyı bir başlangıç noktası olarak kullanarak mühendislik, hukuk, finans gibi diğer profesyonel sektörlere de yayılarak "her profesyonelin yapay zeka asistanı" olmaktır.</p>
+            </div>
+        </div>
+    </div>
+    <div id="contact-modal-overlay" class="modal-overlay">
+        <div id="contact-modal-container" class="modal-container">
+            <div class="p-8 text-white relative">
+                <button id="close-contact-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors text-3xl">&times;</button>
+                <h2 class="text-2xl font-bold mb-4 accent-color">İletişime Geçin</h2>
+                <p class="text-gray-300 text-base mb-6">Projemizle ilgili soru, öneri veya iş birliği talepleriniz için bize ulaşmaktan çekinmeyin.</p>
+                <div class="space-y-4">
+                    <div><label class="text-xs text-gray-400">E-Posta</label><p class="font-mono bg-gray-900 p-3 rounded text-center text-sm">hakanmetin@asyamed.com</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="form-success-modal-overlay" class="modal-overlay">
+        <div class="modal-container">
+            <div class="p-8 text-white text-center">
+                <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-500/20 border-2 border-green-500 mb-4 mx-auto">
+                    <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h2 class="text-2xl font-bold mb-2">Teşekkür Ederiz!</h2>
+                <p class="text-gray-300 text-base leading-relaxed">Başvurunuz alınmıştır. En kısa sürede sizinle iletişime geçeceğiz.</p>
+                <button id="close-success-modal" class="main-button w-full mt-6 bg-accent text-gray-900 font-bold py-2 px-6 rounded-lg text-base">Kapat</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}

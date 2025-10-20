@@ -6,10 +6,10 @@ const dashboardModule = {
     render: ({ userData }) => {
         const postPlaceholder = userData.role === 'doctor' ? 'Bir vaka, makale veya soru paylaşın...' : 'Bir soru sor, notlarını paylaş...';
         const feedItems = [
-            { user: 'Dr. Barış Aydın', role: 'Anestezi Uzmanı', content: 'Yoğun bir nöbetin ardından servisin sessizliği... Bazen en iyi dinlenme, bu anlarda saklı. Herkese iyi dinlenmeler. #nobet #doktorhayatı', time: '15 dakika önce', likes: 12, comments: 3, image: 'assets/ornek.jpg' },
+            { user: 'Dr. Barış Aydın', role: 'Anestezi Uzmanı', content: 'Yoğun bir nöbetin ardından servisin sessizliği... Bazen en iyi dinlenme, bu anlarda saklı. Herkese iyi dinlenmeler. #nobet #doktorhayatı', time: '15 dakika önce', likes: 12, comments: 3, image: '/static/img/ornek.jpg' },
             { user: 'Dr. Elif Yılmaz', role: 'Kardiyolog', content: 'Nadir bir perikardiyal kist vakasıyla karşılaştım. Görüntüleri anonimleştirerek paylaşıyorum, ilginç bir tartışma olabilir.', time: '2 saat önce', likes: 47, comments: 9, image: null },
             { user: 'Ahmet Çelik', role: '4. Sınıf Öğrenci', content: 'Farmakoloji vizesi için hazırladığım özet notlarımı Kütüphane modülüne "public" olarak ekledim. Herkese başarılar!', time: '5 saat önce', likes: 125, comments: 16, image: null },
-            { user: 'Fatih Develi', role: '1.Sınıf Öğrencisi', content: 'Fazladan fizyo notu olan yorum olarak paylaşabilir mi ben de kendi notlarımı yollayabilirim', time: '8 saat önce', likes: 13, comments: 3, image: 'assets/ornek2.jpg' },
+            { user: 'Fatih Develi', role: '1.Sınıf Öğrencisi', content: 'Fazladan fizyo notu olan yorum olarak paylaşabilir mi ben de kendi notlarımı yollayabilirim', time: '8 saat önce', likes: 13, comments: 3, image: '/static/img/ornek2.jpg' },
             { user: 'Prof. Dr. Canan Aksoy', role: 'Nörolog', content: 'Yeni yayınlanan bir makale, Alzheimer teşhisinde kullanılan amiloid PET taramalarının etkinliğini sorguluyor. Okumanızı tavsiye ederim. #alzheimer #nöroloji', time: 'dün', likes: 82, comments: 21, image: null },
             { user: 'Büşra Öztürk', role: 'İntörn', content: 'Asistan hocaların kendini fazla öne çıkartması iyice bunaltmaya başladı tamam kanka en yetkili sensin #staj #tıp', time: '2 gün önce', likes: 150, comments: 34, image: null },
         ];
