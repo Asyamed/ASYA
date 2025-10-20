@@ -66,19 +66,31 @@ function main() {
 
     // Tüm olay dinleyicilerini kur
     setupEventListeners();
-    init3DBackground();
+    if (window.THREE) {
+        init3DBackground();
+    } else {
+        window.addEventListener('load', init3DBackground, { once: true });
+    }
 }
 
 // 3D Arka Plan Animasyonu
 function init3DBackground() {
     const container = document.getElementById('scene-container');
+    if (!container) return;
+
+    const THREERef = window.THREE;
+    if (!THREERef) {
+        console.warn('Three.js yüklenemedi; login arka plan animasyonu devre dışı bırakıldı.');
+        return;
+    }
+
     let scene, camera, renderer, points, points2;
 
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+    scene = new THREERef.Scene();
+    camera = new THREERef.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
     camera.position.z = 400;
 
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer = new THREERef.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x050810, 1);
     container.appendChild(renderer.domElement);
@@ -88,16 +100,16 @@ function init3DBackground() {
 
     const vertices = [];
     for (let i = 0; i < particles; i++) vertices.push((Math.random() * areaWidth) - areaWidth / 2, (Math.random() * areaHeight) - areaHeight / 2, (Math.random() - 0.5) * 600);
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    points = new THREE.Points(geometry, new THREE.PointsMaterial({ color: 0x38E5C6, size: 1.5, transparent: true, opacity: 0.7 }));
+    const geometry = new THREERef.BufferGeometry();
+    geometry.setAttribute('position', new THREERef.Float32BufferAttribute(vertices, 3));
+    points = new THREERef.Points(geometry, new THREERef.PointsMaterial({ color: 0x38E5C6, size: 1.5, transparent: true, opacity: 0.7 }));
     scene.add(points);
 
     const vertices2 = [];
     for (let i = 0; i < particles / 2; i++) vertices2.push((Math.random() * areaWidth) - areaWidth / 2, (Math.random() * areaHeight) - areaHeight / 2, (Math.random() - 0.5) * 600);
-    const geometry2 = new THREE.BufferGeometry();
-    geometry2.setAttribute('position', new THREE.Float32BufferAttribute(vertices2, 3));
-    points2 = new THREE.Points(geometry2, new THREE.PointsMaterial({ color: 0x8A2BE2, size: 1.2, transparent: true, opacity: 0.6 }));
+    const geometry2 = new THREERef.BufferGeometry();
+    geometry2.setAttribute('position', new THREERef.Float32BufferAttribute(vertices2, 3));
+    points2 = new THREERef.Points(geometry2, new THREERef.PointsMaterial({ color: 0x8A2BE2, size: 1.2, transparent: true, opacity: 0.6 }));
     scene.add(points2);
 
     let mouseX = 0, mouseY = 0;
