@@ -8,6 +8,7 @@
         <a href="#institutional" class="nav-link">Kurumsal</a>
         <a href="#" id="about-btn" class="nav-link">Vizyon</a>
         <a href="#" id="contact-btn" class="nav-link">İletişim</a>
-        <a href="/login" class="nav-link">Giriş Yap</a>
+        {% set login_href = page_url('login') if page_url is defined else '/login' %}
+        <a href="{{ login_href }}" class="nav-link">Giriş Yap</a>
     </nav>
 </header>

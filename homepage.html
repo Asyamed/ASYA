@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="">
+    <title>Anasayfa - ASYA AI</title>
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: '#38e5c6',
+                        'accent-color': '#38e5c6',
+                    },
+                },
+            },
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/variables.css">
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/components/index.css">
+    
+<link rel="stylesheet" href="static/css/homepage.css">
+
+</head>
+<body class="antialiased font-[Inter]" data-api-base="" data-auth-state="anonymous" data-auth-sync-endpoint="" data-csrf-token="">
+    <!-- backend-placeholder:body-dataset
+         api_base_url -> Backend API temel adresi
+         auth_state -> 'authenticated', 'anonymous' gibi mevcut oturum durumu
+         auth_sync_endpoint -> Frontend oturum olaylarını backend'e iletecek uç nokta
+         csrf_token -> Sunucu tarafından üretilecek token -->
+    <div id="scene-container"></div>
+    
+
+    <main>
+        
+<div class="p-3 h-screen w-screen">
+    <div id="loading-overlay" class="fixed inset-0 bg-background z-50 flex items-center justify-center">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-accent"></div>
+    </div>
+
+    <div class="h-full hidden" id="main-content">
+        <aside class="w-64 flex-shrink-0 glass soft p-3 flex-col border-r border-transparent fixed h-full transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 lg:flex" id="sidebar">
+    <div class="flex items-center justify-center h-16">
+        <img src="static/img/logo.png" alt="ASYA Logo" class="h-9 w-9"><span class="ml-3 text-xl font-bold text-white">ASYA</span>
+    </div>
+
+    <nav id="main-nav" class="flex-1 px-1 py-4 space-y-2 overflow-y-auto"></nav>
+
+    <div id="chat-history-container" class="px-1 py-2 space-y-2 border-t border-border hidden">
+        <h4 class="text-xs font-semibold text-text-secondary px-3">SOHBET GEÇMİŞİ</h4>
+        <div id="chat-history-list" class="space-y-1">
+            <div class="chat-history-item text-text-secondary">Vaka Tartışması: Pnömoni</div>
+            <div class="chat-history-item text-text-secondary">Solunum Fizyolojisi Soru-Cevap</div>
+            <div class="chat-history-item text-text-secondary">Nadir Görülen Tümörler</div>
+        </div>
+    </div>
+
+    <div class="px-2 py-4 border-t border-border mt-auto">
+        <div class="flex items-center">
+            <img id="user-profile-img" class="h-10 w-10 rounded-full object-cover border-2 border-accent" src="https://placehold.co/40x40/0B1120/E0E0E0?text=A" alt="Profil Resmi">
+            <div class="ml-3">
+                <p id="user-display-name" class="text-sm font-semibold text-white">Yükleniyor...</p>
+                <p id="user-role-display" class="text-xs text-text-secondary capitalize">Kullanıcı Rolü</p>
+            </div>
+        </div>
+        <button id="logout-btn" class="w-full mt-4 flex items-center justify-center text-text-secondary hover:text-white transition-colors duration-200 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            Çıkış Yap
+        </button>
+    </div>
+</aside>
+
+        <div class="lg:pl-72 w-full h-full flex flex-col">
+            <header class="glass-strong soft px-4 py-3 flex items-center justify-between">
+    <button id="sidebar-toggle" class="lg:hidden p-2 rounded-md bg-white/5 text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+    </button>
+    <div class="text-sm font-semibold hidden lg:block" id="header-title">Anasayfa</div>
+    <div class="flex items-center gap-4">
+        <span class="text-sm text-text-secondary" id="current-date"></span>
+        <div class="w-px h-6 bg-border"></div>
+        <span class="font-semibold text-accent text-sm" id="user-platform-title">ASYA Platform</span>
+    </div>
+</header>
+
+            <main class="flex-1 p-0 pt-3 overflow-hidden">
+                <div class="w-full mx-auto px-1 h-full">
+                    <div id="views-container" class="h-full"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<div id="chat-windows-container" class="dashboard-chat-offset fixed bottom-0 p-3 flex items-end gap-4 z-20 pointer-events-none"></div>
+
+    </main>
+
+    
+
+    
+<script type="module" src="static/js/pages/homepage.js"></script>
+
+</body>
+</html>

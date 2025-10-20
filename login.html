@@ -1,17 +1,47 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="">
+    <title>Giriş Yap - ASYA AI</title>
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: '#38e5c6',
+                        'accent-color': '#38e5c6',
+                    },
+                },
+            },
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/variables.css">
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/components/index.css">
+    
+<link rel="stylesheet" href="static/css/login.css">
 
-{% set index_href = page_url('index') if page_url is defined else '/' %}
+</head>
+<body class="antialiased font-[Inter]" data-api-base="" data-auth-state="anonymous" data-auth-sync-endpoint="" data-csrf-token="">
+    <!-- backend-placeholder:body-dataset
+         api_base_url -> Backend API temel adresi
+         auth_state -> 'authenticated', 'anonymous' gibi mevcut oturum durumu
+         auth_sync_endpoint -> Frontend oturum olaylarını backend'e iletecek uç nokta
+         csrf_token -> Sunucu tarafından üretilecek token -->
+    <div id="scene-container"></div>
+    
 
-{% block title %}Giriş Yap - ASYA AI{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-{% endblock %}
-
-{% block header %}{% endblock %}
-
-{% block content %}
-<a href="{{ index_href }}" class="absolute top-6 left-6 z-20 flex items-center space-x-2 text-gray-400 hover:text-white transition-colors">
+    <main>
+        
+<a href="index.html" class="absolute top-6 left-6 z-20 flex items-center space-x-2 text-gray-400 hover:text-white transition-colors">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
     </svg>
@@ -22,12 +52,12 @@
     <div id="auth-container" class="form-container w-full max-w-md rounded-2xl p-8">
         <div id="login-view" class="view active" data-auth-view="login">
             <div class="text-center space-y-2 fade-in">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="ASYA Logo" class="h-20 w-20 mx-auto mb-4">
+                <img src="static/img/logo.png" alt="ASYA Logo" class="h-20 w-20 mx-auto mb-4">
                 <h1 class="text-3xl font-bold text-white">Tekrar Hoş Geldiniz</h1>
                 <p class="text-gray-400">Lütfen bilgilerinizi girerek devam edin.</p>
             </div>
-            <form id="login-form" data-form="auth-login" data-endpoint="{{ auth_login_endpoint|default('/api/auth/login') }}" data-method="POST">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token|default('') }}" data-form-csrf>
+            <form id="login-form" data-form="auth-login" data-endpoint="/api/auth/login" data-method="POST">
+                <input type="hidden" name="csrf_token" value="" data-form-csrf>
                 <!-- backend-placeholder:auth-login-fields Dinamik olarak backend'den doldurulacak alanlar için bu bloğu güncelleyin. -->
                 <div class="space-y-4 pt-6 fade-in delay-100">
                     <input type="email" id="login-email" name="email" placeholder="E-posta Adresi" class="form-input w-full p-3 rounded-lg text-white" required autocomplete="email">
@@ -52,7 +82,7 @@
 
         <div id="register-view" class="view" data-auth-view="role-selection">
             <div class="text-center space-y-2 fade-in">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="ASYA Logo" class="h-20 w-20 mx-auto mb-4">
+                <img src="static/img/logo.png" alt="ASYA Logo" class="h-20 w-20 mx-auto mb-4">
                 <h1 class="text-3xl font-bold text-white">ASYA'ya Hoş Geldiniz</h1>
                 <p class="text-gray-400">Size en uygun deneyimi sunabilmemiz için lütfen rolünüzü seçin.</p>
             </div>
@@ -91,12 +121,12 @@
 
         <div id="register-form-view" class="view" data-auth-view="register">
             <div class="text-center space-y-2 fade-in">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="ASYA Logo" class="h-16 w-16 mx-auto mb-2">
+                <img src="static/img/logo.png" alt="ASYA Logo" class="h-16 w-16 mx-auto mb-2">
                 <h1 id="register-title" class="text-2xl font-bold text-white">Aramıza Hoş Geldiniz</h1>
                 <p id="register-subtitle" class="text-gray-400"></p>
             </div>
-            <form id="register-form" data-form="auth-register" data-endpoint="{{ auth_register_endpoint|default('/api/auth/register') }}" data-method="POST">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token|default('') }}" data-form-csrf>
+            <form id="register-form" data-form="auth-register" data-endpoint="/api/auth/register" data-method="POST">
+                <input type="hidden" name="csrf_token" value="" data-form-csrf>
                 <div id="dynamic-form" class="space-y-4 pt-6 fade-in delay-100">
                     <!-- dynamic-slot:register-form-fields JS veya backend ile rol bazlı alanları buraya ekleyin. -->
                 </div>
@@ -115,8 +145,8 @@
                 <h1 class="text-3xl font-bold text-white">Şifremi Unuttum</h1>
                 <p class="text-gray-400">Lütfen kayıtlı e-posta adresinizi girin.</p>
             </div>
-            <form id="reset-password-form" data-form="auth-password-reset" data-endpoint="{{ auth_reset_endpoint|default('/api/auth/password-reset') }}" data-method="POST">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token|default('') }}" data-form-csrf>
+            <form id="reset-password-form" data-form="auth-password-reset" data-endpoint="/api/auth/password-reset" data-method="POST">
+                <input type="hidden" name="csrf_token" value="" data-form-csrf>
                 <div class="space-y-4 pt-6 fade-in delay-100">
                     <input type="email" id="reset-email" name="email" placeholder="E-posta Adresi" class="form-input w-full p-3 rounded-lg text-white" required autocomplete="email">
                 </div>
@@ -145,10 +175,13 @@
         <p class="mt-4 text-gray-300 text-sm">İşleniyor...</p>
     </div>
 </div>
-{% endblock %}
 
-{% block footer %}{% endblock %}
+    </main>
 
-{% block extra_js %}
-<script type="module" src="{{ url_for('static', filename='js/pages/login.js') }}"></script>
-{% endblock %}
+    
+
+    
+<script type="module" src="static/js/pages/login.js"></script>
+
+</body>
+</html>

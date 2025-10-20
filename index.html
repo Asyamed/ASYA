@@ -1,14 +1,61 @@
-{% extends 'base.html' %}
-{% import 'partials/components.html' as components %}
-{% set login_href = page_url('login') if page_url is defined else '/login' %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="">
+    <title>ASYA - Tıbbın Geleceği için Yapay Zeka</title>
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: '#38e5c6',
+                        'accent-color': '#38e5c6',
+                    },
+                },
+            },
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/variables.css">
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/components/index.css">
+    
+<link rel="stylesheet" href="static/css/index.css">
 
-{% block title %}ASYA - Tıbbın Geleceği için Yapay Zeka{% endblock %}
+</head>
+<body class="antialiased font-[Inter]" data-api-base="" data-auth-state="anonymous" data-auth-sync-endpoint="" data-csrf-token="">
+    <!-- backend-placeholder:body-dataset
+         api_base_url -> Backend API temel adresi
+         auth_state -> 'authenticated', 'anonymous' gibi mevcut oturum durumu
+         auth_sync_endpoint -> Frontend oturum olaylarını backend'e iletecek uç nokta
+         csrf_token -> Sunucu tarafından üretilecek token -->
+    <div id="scene-container"></div>
+    
+        <header class="site-header">
+    <div class="flex items-center space-x-3">
+        <img src="static/img/logo.png" alt="ASYA Logo" class="h-8 w-8 rounded-full">
+        <span class="font-bold text-white text-lg">ASYA</span>
+    </div>
+    <nav class="hidden md:flex items-center text-sm">
+        <a href="#features" class="nav-link">Özellikler</a>
+        <a href="#institutional" class="nav-link">Kurumsal</a>
+        <a href="#" id="about-btn" class="nav-link">Vizyon</a>
+        <a href="#" id="contact-btn" class="nav-link">İletişim</a>
+        
+        <a href="login.html" class="nav-link">Giriş Yap</a>
+    </nav>
+</header>
+    
 
-{% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-{% endblock %}
-
-{% block content %}
+    <main>
+        
 <section class="hero-wrapper">
     <div class="left-pane text-center lg:text-left">
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
@@ -17,7 +64,7 @@
         <p class="mt-4 text-lg text-gray-300 max-w-md mx-auto lg:mx-0">
             ASYA; doktorlar, tıp öğrencileri ve sağlık kurumları için tasarlanmış yapay zeka asistanıdır. Teşhise yardımcı olur, eğitimi destekler ve operasyonel verimliliği artırır.
         </p>
-        <a href="{{ login_href }}" class="inline-block">
+        <a href="login.html" class="inline-block">
             <button id="login-register-btn" class="main-button bg-accent text-gray-900 font-bold py-3 px-10 rounded-full text-lg mt-8">
                 Platforma Katılın
             </button>
@@ -39,21 +86,36 @@
             <div id="demo-outlet"></div>
         </div>
 
-        {% set highlight_cards = [
-            {
-                'icon': '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
-                'title': 'Uygulamaya Genel Bakış',
-                'description': 'ASYA\'nın temel yeteneklerini, size ve kurumunuza nasıl değer katabileceğini keşfedin.'
-            },
-            {
-                'icon': '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>',
-                'title': 'Veri Güvenliği & Etik',
-                'description': 'KVKK ve GDPR uyumlu, anonimleştirilmiş veri işleme yaklaşımımızla güvendesiniz.'
-            }
-        ] %}
-        {% for card in highlight_cards %}
-            {{ components.feature_highlight_card(card.icon, card.title, card.description) }}
-        {% endfor %}
+        
+        
+            
+<div class="w-full feature-card card-hover rounded-2xl p-5 flex items-start gap-4">
+    <div>
+        <div class="flex items-center justify-center h-10 w-10 rounded-lg bg-gray-800 border border-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </div>
+    </div>
+    <div>
+        <h4 class="font-bold text-white">Uygulamaya Genel Bakış</h4>
+        <p class="text-sm text-gray-400 mt-1">ASYA'nın temel yeteneklerini, size ve kurumunuza nasıl değer katabileceğini keşfedin.</p>
+    </div>
+</div>
+
+        
+            
+<div class="w-full feature-card card-hover rounded-2xl p-5 flex items-start gap-4">
+    <div>
+        <div class="flex items-center justify-center h-10 w-10 rounded-lg bg-gray-800 border border-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+        </div>
+    </div>
+    <div>
+        <h4 class="font-bold text-white">Veri Güvenliği & Etik</h4>
+        <p class="text-sm text-gray-400 mt-1">KVKK ve GDPR uyumlu, anonimleştirilmiş veri işleme yaklaşımımızla güvendesiniz.</p>
+    </div>
+</div>
+
+        
     </div>
 </section>
 
@@ -62,26 +124,38 @@
         <h2 class="section-title text-white">Tıbbın Karmaşıklığına <span class="accent-color">Modern Bir Çözüm</span></h2>
         <p class="section-subtitle">Sağlık profesyonelleri ve öğrencileri her gün zaman, bilgi ve verimlilik zorluklarıyla karşılaşıyor. ASYA bu engelleri aşmak için tasarlandı.</p>
         <div class="grid md:grid-cols-3 gap-8 mt-12">
-            {% set problems = [
-                {
-                    'icon': '<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
-                    'title': 'Zaman Baskısı',
-                    'description': 'Doktorlar, uzun raporlama süreçleri ve yoğun hasta trafiği arasında değerli zamanlarını kaybediyor.'
-                },
-                {
-                    'icon': '<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>',
-                    'title': 'Bilgi Yığını',
-                    'description': 'Tıp öğrencileri, devasa bir bilgi havuzunda kayboluyor ve verimli çalışma yöntemleri bulmakta zorlanıyor.'
-                },
-                {
-                    'icon': '<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>',
-                    'title': 'Operasyonel Verimsizlik',
-                    'description': 'Sağlık kurumları, hasta akışını optimize etmek ve kaynaklarını en verimli şekilde kullanmak için mücadele ediyor.'
-                }
-            ] %}
-            {% for problem in problems %}
-                {{ components.problem_card(problem.icon, problem.title, problem.description) }}
-            {% endfor %}
+            
+            
+                
+<div class="text-center p-6">
+    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-gray-800 border border-gray-700 mb-4 mx-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+    </div>
+    <h3 class="text-xl font-bold">Zaman Baskısı</h3>
+    <p class="text-gray-400 mt-2">Doktorlar, uzun raporlama süreçleri ve yoğun hasta trafiği arasında değerli zamanlarını kaybediyor.</p>
+</div>
+
+            
+                
+<div class="text-center p-6">
+    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-gray-800 border border-gray-700 mb-4 mx-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+    </div>
+    <h3 class="text-xl font-bold">Bilgi Yığını</h3>
+    <p class="text-gray-400 mt-2">Tıp öğrencileri, devasa bir bilgi havuzunda kayboluyor ve verimli çalışma yöntemleri bulmakta zorlanıyor.</p>
+</div>
+
+            
+                
+<div class="text-center p-6">
+    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-gray-800 border border-gray-700 mb-4 mx-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 accent-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+    </div>
+    <h3 class="text-xl font-bold">Operasyonel Verimsizlik</h3>
+    <p class="text-gray-400 mt-2">Sağlık kurumları, hasta akışını optimize etmek ve kaynaklarını en verimli şekilde kullanmak için mücadele ediyor.</p>
+</div>
+
+            
         </div>
     </div>
 </section>
@@ -163,7 +237,7 @@
     <div class="max-w-5xl mx-auto text-center">
         <h2 class="text-4xl lg:text-5xl font-extrabold text-white">Tıbbın Geleceğini <span class="animated-gradient-text">Bugün Şekillendirin.</span></h2>
         <p class="section-subtitle">Yapay zekanın gücünü kliniğinize ve eğitiminize taşıyın. Daha hızlı, daha verimli ve daha donanımlı bir tıp dünyası için ASYA topluluğuna katılın.</p>
-        <a href="{{ login_href }}" class="inline-block">
+        <a href="login.html" class="inline-block">
             <button class="main-button bg-accent text-gray-900 font-bold py-4 px-12 rounded-full text-xl mt-10">
                 Ücretsiz Başlayın
             </button>
@@ -204,8 +278,54 @@
         </div>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_js %}
-<script type="module" src="{{ url_for('static', filename='js/pages/index.js') }}"></script>
-{% endblock %}
+    </main>
+
+    
+        <footer class="site-footer">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
+        <div class="space-y-4">
+            <div class="flex items-center space-x-2">
+                <img src="static/img/logo.png" alt="ASYA Logo" class="h-7 w-7 rounded-full">
+                <span class="font-bold text-white text-base">ASYA</span>
+            </div>
+            <p class="text-gray-400">Yapay zeka destekli medikal asistan platformu.</p>
+        </div>
+        <div>
+            <h4 class="font-semibold text-white mb-3">Hızlı Erişim</h4>
+            <ul class="space-y-2 text-gray-400">
+                <li><a href="#features" class="hover:text-accent-color transition-colors">Özellikler</a></li>
+                <li><a href="#institutional" class="hover:text-accent-color transition-colors">Kurumsal Çözümler</a></li>
+                <li><a href="#" id="about-btn-footer" class="hover:text-accent-color transition-colors">Hakkımızda</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-semibold text-white mb-3">Yasal</h4>
+            <ul class="space-y-2 text-gray-400">
+                <li><a href="#" class="hover:text-accent-color transition-colors">Gizlilik Politikası</a></li>
+                <li><a href="#" class="hover:text-accent-color transition-colors">Kullanım Şartları</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-semibold text-white mb-3">Sosyal Medya</h4>
+            <div class="flex items-center space-x-4">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/></svg>
+                </a>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12.019c0 4.435 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12.019C22 6.477 17.523 2 12 2z" clip-rule="evenodd" /></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="mt-8 pt-8 border-t border-gray-800 text-center text-xs text-gray-500">
+        © 2025 ASYA AI. Tüm hakları saklıdır.
+    </div>
+</footer>
+    
+
+    
+<script type="module" src="static/js/pages/index.js"></script>
+
+</body>
+</html>
