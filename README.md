@@ -11,14 +11,16 @@ static/
   js/
     modules/
 templates/
-  layouts/
-    base.html
-  homepage.html
-  index.html
-  login.html
+  base.html
+  pages/
+    homepage.html
+    index.html
+    login.html
+  partials/
+    *.html
 ```
 
-- **templates/**: Uygulamanın sayfa şablonları. `layouts/base.html` ortak başlık, altbilgi ve global script referanslarını içerir.
+- **templates/**: Uygulamanın sayfa şablonları. `base.html` ortak başlık, altbilgi ve global script referanslarını içerir; `partials/` altındaki parçalar tekrar kullanılabilir bileşenleri barındırır.
 - **static/**: Harici stil, betik ve görseller. Sayfa bazlı JS dosyaları (`index.js`, `login.js`, `homepage.js`) ilgili şablonlar tarafından yüklenir.
 - **static/js/modules/**: Giriş yaptıktan sonraki uygulama ekranında kullanılan modüler JavaScript bileşenleri.
 
@@ -26,9 +28,9 @@ templates/
 
 1. Seçtiğiniz Python web çatısında (ör. Flask) `templates/` ve `static/` klasörlerini varsayılan dizinler olarak gösterin.
 2. Sunucuyu başlattıktan sonra aşağıdaki rotaları eşleştirin:
-   - `/` → `templates/index.html`
-   - `/login` → `templates/login.html`
-   - `/app` (veya tercihinize göre) → `templates/homepage.html`
+   - `/` → `templates/pages/index.html`
+   - `/login` → `templates/pages/login.html`
+   - `/app` (veya tercihinize göre) → `templates/pages/homepage.html`
 3. Firebase yapılandırması ve CDN üzerinden yüklenen kütüphaneler (Tailwind CSS, Three.js, Markdown-it) doğrudan tarayıcıya servis edilir; ek build adımı gerekmez.
 
 ## Notlar

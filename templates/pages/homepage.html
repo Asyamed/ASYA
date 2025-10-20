@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Anasayfa - ASYA AI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<div class="p-3 h-screen w-screen">
+    <div id="loading-overlay" class="fixed inset-0 bg-background z-50 flex items-center justify-center">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-accent"></div>
+    </div>
+
+    <div class="h-full hidden" id="main-content">
+        {% include 'partials/dashboard_sidebar.html' %}
+
+        <div class="lg:pl-72 w-full h-full flex flex-col">
+            {% include 'partials/dashboard_header.html' %}
+
+            <main class="flex-1 p-0 pt-3 overflow-hidden">
+                <div class="w-full mx-auto px-1 h-full">
+                    <div id="views-container" class="h-full"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<div id="chat-windows-container" class="dashboard-chat-offset fixed bottom-0 p-3 flex items-end gap-4 z-20 pointer-events-none"></div>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block extra_js %}
+<script type="module" src="{{ url_for('static', filename='js/homepage.js') }}"></script>
+{% endblock %}
