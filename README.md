@@ -22,7 +22,7 @@ templates/
 
 - **templates/**: Uygulamanın sayfa şablonları. `base.html` ortak başlık, altbilgi ve global script referanslarını içerir; `partials/` altındaki parçalar tekrar kullanılabilir bileşenleri barındırır.
 - **static/**: Harici stil, betik ve görseller. Sayfa bazlı JS dosyaları (`index.js`, `login.js`, `homepage.js`) ilgili şablonlar tarafından yüklenir.
-- **static/js/modules/**: Giriş yaptıktan sonraki uygulama ekranında kullanılan modüler JavaScript bileşenleri.
+- **static/js/widgets/**: Giriş yaptıktan sonraki uygulama ekranında kullanılan modüler JavaScript bileşenleri.
 
 ## Geliştirme
 
@@ -35,6 +35,6 @@ templates/
 
 ## Notlar
 
-- Arka plan parçacık animasyonu ve modal yönetimi `static/js/index.js` içinde tutulur.
-- Giriş sonrası pano deneyimi `static/js/homepage.js` ve alt modüller ile yönetilir; modül içindeki görseller `/static/img/` altından servis edilir.
-- Giriş/kayıt akışları Firebase Authentication ve Firestore üzerine kuruludur; gerekli anahtarlar `static/js/login.js` içinde yer alır.
+- Arka plan parçacık animasyonu ve modal yönetimi `static/js/pages/index.js` içinde tutulur.
+- Giriş sonrası pano deneyimi `static/js/pages/homepage.js` ve alt modüller ile yönetilir; modül içindeki görseller `/static/img/` altından servis edilir.
+- Giriş/kayıt akışları Firebase Authentication ve Firestore üzerine kuruludur; gerekli anahtarlar `static/js/pages/login.js` içinde yer alır.
