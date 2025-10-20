@@ -1,0 +1,98 @@
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes slideUpChat {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.feed-item {
+    opacity: 0;
+    animation: slideInUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.like-btn.liked {
+    color: var(--color-accent);
+}
+
+.like-btn.liked svg {
+    fill: var(--color-accent);
+    animation: heartBeat 0.4s ease-in-out;
+}
+
+.messenger-tab-content.active,
+.tab-content-panel.active,
+.library-tab-content.active,
+.view.active {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.animated-gradient-text {
+    background: linear-gradient(90deg, #e0e0e0, #38e5c6, #e0e0e0);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-animation 4s linear infinite;
+}

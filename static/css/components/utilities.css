@@ -1,0 +1,59 @@
+.accent-color,
+.u-text-accent {
+    color: var(--color-accent);
+}
+
+.bg-accent,
+.u-bg-accent {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+}
+
+.soft,
+.u-rounded-soft {
+    border-radius: var(--radius-lg);
+}
+
+.pill,
+.u-rounded-pill {
+    border-radius: var(--radius-pill);
+}
+
+.text-muted,
+.u-text-muted {
+    color: var(--color-text-secondary);
+}
+
+.card-hover {
+    transition: var(--transition-base);
+}
+
+.card-hover:hover {
+    box-shadow: var(--shadow-card), 0 0 20px 0 var(--color-glow);
+    border-color: var(--color-accent-strong);
+    transform: translateY(-3px);
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+.delay-400 {
+    animation-delay: 0.4s;
+}
