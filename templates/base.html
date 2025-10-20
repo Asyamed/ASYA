@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token|default('') }}">
     <title>{% block title %}ASYA{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
@@ -14,7 +15,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/components/index.css') }}">
     {% block extra_css %}{% endblock %}
 </head>
-<body class="antialiased font-[Inter]">
+<body class="antialiased font-[Inter]" data-api-base="{{ api_base_url|default('') }}" data-auth-state="{{ auth_state|default('anonymous') }}" data-auth-sync-endpoint="{{ auth_sync_endpoint|default('') }}" data-csrf-token="{{ csrf_token|default('') }}">
+    <!-- backend-placeholder:body-dataset
+         api_base_url -> Backend API temel adresi
+         auth_state -> 'authenticated', 'anonymous' gibi mevcut oturum durumu
+         auth_sync_endpoint -> Frontend oturum olaylarını backend'e iletecek uç nokta
+         csrf_token -> Sunucu tarafından üretilecek token -->
     <div id="scene-container"></div>
     {% block header %}
         {% include 'partials/site_header.html' %}

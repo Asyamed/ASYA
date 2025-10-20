@@ -18,16 +18,18 @@
 
 <div class="min-h-screen flex items-center justify-center p-4">
     <div id="auth-container" class="form-container w-full max-w-md rounded-2xl p-8">
-        <div id="login-view" class="view active">
+        <div id="login-view" class="view active" data-auth-view="login">
             <div class="text-center space-y-2 fade-in">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="ASYA Logo" class="h-20 w-20 mx-auto mb-4">
                 <h1 class="text-3xl font-bold text-white">Tekrar Hoş Geldiniz</h1>
                 <p class="text-gray-400">Lütfen bilgilerinizi girerek devam edin.</p>
             </div>
-            <form id="login-form">
+            <form id="login-form" data-form="auth-login" data-endpoint="{{ auth_login_endpoint|default('/api/auth/login') }}" data-method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token|default('') }}" data-form-csrf>
+                <!-- backend-placeholder:auth-login-fields Dinamik olarak backend'den doldurulacak alanlar için bu bloğu güncelleyin. -->
                 <div class="space-y-4 pt-6 fade-in delay-100">
-                    <input type="email" id="login-email" placeholder="E-posta Adresi" class="form-input w-full p-3 rounded-lg text-white" required>
-                    <input type="password" id="login-password" placeholder="Şifre" class="form-input w-full p-3 rounded-lg text-white" required>
+                    <input type="email" id="login-email" name="email" placeholder="E-posta Adresi" class="form-input w-full p-3 rounded-lg text-white" required autocomplete="email">
+                    <input type="password" id="login-password" name="password" placeholder="Şifre" class="form-input w-full p-3 rounded-lg text-white" required autocomplete="current-password">
                 </div>
                 <div class="pt-6 space-y-4 fade-in delay-200">
                     <button type="submit" class="main-button w-full text-gray-900 font-bold py-3 px-10 rounded-lg text-lg">Giriş Yap</button>
@@ -46,7 +48,7 @@
             </p>
         </div>
 
-        <div id="register-view" class="view">
+        <div id="register-view" class="view" data-auth-view="role-selection">
             <div class="text-center space-y-2 fade-in">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="ASYA Logo" class="h-20 w-20 mx-auto mb-4">
                 <h1 class="text-3xl font-bold text-white">ASYA'ya Hoş Geldiniz</h1>
@@ -85,14 +87,16 @@
             </p>
         </div>
 
-        <div id="register-form-view" class="view">
+        <div id="register-form-view" class="view" data-auth-view="register">
             <div class="text-center space-y-2 fade-in">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="ASYA Logo" class="h-16 w-16 mx-auto mb-2">
                 <h1 id="register-title" class="text-2xl font-bold text-white">Aramıza Hoş Geldiniz</h1>
                 <p id="register-subtitle" class="text-gray-400"></p>
             </div>
-            <form id="register-form">
+            <form id="register-form" data-form="auth-register" data-endpoint="{{ auth_register_endpoint|default('/api/auth/register') }}" data-method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token|default('') }}" data-form-csrf>
                 <div id="dynamic-form" class="space-y-4 pt-6 fade-in delay-100">
+                    <!-- dynamic-slot:register-form-fields JS veya backend ile rol bazlı alanları buraya ekleyin. -->
                 </div>
                 <div class="pt-6 space-y-4 fade-in delay-200">
                     <button type="submit" class="main-button w-full text-gray-900 font-bold py-3 px-10 rounded-lg text-lg">Kaydı Tamamla</button>
@@ -104,14 +108,15 @@
             </p>
         </div>
 
-        <div id="reset-password-view" class="view">
+        <div id="reset-password-view" class="view" data-auth-view="reset-password">
             <div class="text-center space-y-2 fade-in">
                 <h1 class="text-3xl font-bold text-white">Şifremi Unuttum</h1>
                 <p class="text-gray-400">Lütfen kayıtlı e-posta adresinizi girin.</p>
             </div>
-            <form id="reset-password-form">
+            <form id="reset-password-form" data-form="auth-password-reset" data-endpoint="{{ auth_reset_endpoint|default('/api/auth/password-reset') }}" data-method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token|default('') }}" data-form-csrf>
                 <div class="space-y-4 pt-6 fade-in delay-100">
-                    <input type="email" id="reset-email" placeholder="E-posta Adresi" class="form-input w-full p-3 rounded-lg text-white" required>
+                    <input type="email" id="reset-email" name="email" placeholder="E-posta Adresi" class="form-input w-full p-3 rounded-lg text-white" required autocomplete="email">
                 </div>
                 <div class="pt-6 space-y-4 fade-in delay-200">
                     <button type="submit" class="main-button w-full text-gray-900 font-bold py-3 px-10 rounded-lg text-lg">Sıfırlama E-postası Gönder</button>
