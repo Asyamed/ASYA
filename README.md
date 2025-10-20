@@ -1,5 +1,7 @@
 # ASYA
 
+Ana web sitemizin GitHub private reposu.
+
 ASYA, tıp profesyonelleri ve öğrencileri için tasarlanmış yapay zekâ destekli platformun web arayüzünü barındırır. Depo artık Flask/Django gibi Jinja uyumlu şablon yapısına göre düzenlenmiş statik varlıklarla birlikte gelir.
 
 ## Hızlı Önizleme
