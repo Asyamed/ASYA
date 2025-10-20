@@ -2,6 +2,18 @@
 
 ASYA, tıp profesyonelleri ve öğrencileri için tasarlanmış yapay zekâ destekli platformun web arayüzünü barındırır. Depo artık Flask/Django gibi Jinja uyumlu şablon yapısına göre düzenlenmiş statik varlıklarla birlikte gelir.
 
+## Hızlı Önizleme
+
+Şablonlar `templates/pages/` altında tutulurken, depo kökünde klasik `index.html`, `login.html` ve `homepage.html` dosyalarının üretilmiş hallerini de bulacaksınız. Bu dosyalar, doğrudan dosya sisteminden (ör. `file://` yolu veya herhangi bir statik sunucu) açıldıklarında modern tasarımı ve işlevleri eksiksiz şekilde gösterir.
+
+Şablonlarda yaptığınız değişiklikleri statik dosyalara tekrar aktarmak için:
+
+```bash
+python scripts/render_static.py
+```
+
+komutunu çalıştırmanız yeterlidir. Script Jinja2 kullandığı için sisteminizde `pip install jinja2` komutu ile kurulum yapmanız gerekebilir.
+
 ## Proje Yapısı
 
 ```

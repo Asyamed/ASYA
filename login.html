@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="">
+    <title>Giriş Yap - ASYA AI</title>
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: '#38e5c6',
+                        'accent-color': '#38e5c6',
+                    },
+                },
+            },
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/variables.css">
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/components/index.css">
+    
+<link rel="stylesheet" href="static/css/login.css">
+
+</head>
+<body class="antialiased font-[Inter]" data-api-base="" data-auth-state="anonymous" data-auth-sync-endpoint="" data-csrf-token="">
+    <!-- backend-placeholder:body-dataset
+         api_base_url -> Backend API temel adresi
+         auth_state -> 'authenticated', 'anonymous' gibi mevcut oturum durumu
+         auth_sync_endpoint -> Frontend oturum olaylarını backend'e iletecek uç nokta
+         csrf_token -> Sunucu tarafından üretilecek token -->
+    <div id="scene-container"></div>
+    
+
+    <main>
+        
+<a href="/" class="absolute top-6 left-6 z-20 flex items-center space-x-2 text-gray-400 hover:text-white transition-colors">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+    </svg>
+    <span>Ana Sayfa</span>
+</a>
+
+<div class="min-h-screen flex items-center justify-center p-4">
+    <div id="auth-container" class="form-container w-full max-w-md rounded-2xl p-8">
+        <div id="login-view" class="view active" data-auth-view="login">
+            <div class="text-center space-y-2 fade-in">
+                <img src="static/img/logo.png" alt="ASYA Logo" class="h-20 w-20 mx-auto mb-4">
+                <h1 class="text-3xl font-bold text-white">Tekrar Hoş Geldiniz</h1>
+                <p class="text-gray-400">Lütfen bilgilerinizi girerek devam edin.</p>
+            </div>
+            <form id="login-form" data-form="auth-login" data-endpoint="/api/auth/login" data-method="POST">
+                <input type="hidden" name="csrf_token" value="" data-form-csrf>
+                <!-- backend-placeholder:auth-login-fields Dinamik olarak backend'den doldurulacak alanlar için bu bloğu güncelleyin. -->
+                <div class="space-y-4 pt-6 fade-in delay-100">
+                    <input type="email" id="login-email" name="email" placeholder="E-posta Adresi" class="form-input w-full p-3 rounded-lg text-white" required autocomplete="email">
+                    <input type="password" id="login-password" name="password" placeholder="Şifre" class="form-input w-full p-3 rounded-lg text-white" required autocomplete="current-password">
+                </div>
+                <div class="pt-6 space-y-4 fade-in delay-200">
+                    <button type="submit" class="main-button w-full text-gray-900 font-bold py-3 px-10 rounded-lg text-lg">Giriş Yap</button>
+                    <button type="button" id="google-signin-btn" class="secondary-button w-full text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.223,0-9.657-3.356-11.303-7.962l-6.571,4.819C9.656,39.663,16.318,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.574l6.19,5.238C42.022,35.616,44,30.138,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
+                        <span>Google ile Giriş Yap</span>
+                    </button>
+                </div>
+            </form>
+            <div id="login-error" class="error-message"></div>
+            <p class="text-center pt-6 text-sm text-gray-400 fade-in delay-300">
+                Hesabınız yok mu? <a href="#" id="show-register" class="font-semibold accent-color hover:underline">Hemen Kayıt Olun</a>
+            </p>
+            <p class="text-center pt-2 text-sm text-gray-400 fade-in delay-400">
+                <a href="#" id="forgot-password" class="font-semibold accent-color hover:underline">Şifremi Unuttum</a>
+            </p>
+        </div>
+
+        <div id="register-view" class="view" data-auth-view="role-selection">
+            <div class="text-center space-y-2 fade-in">
+                <img src="static/img/logo.png" alt="ASYA Logo" class="h-20 w-20 mx-auto mb-4">
+                <h1 class="text-3xl font-bold text-white">ASYA'ya Hoş Geldiniz</h1>
+                <p class="text-gray-400">Size en uygun deneyimi sunabilmemiz için lütfen rolünüzü seçin.</p>
+            </div>
+            <div class="pt-8 grid grid-cols-1 md:grid-cols-2 gap-6 fade-in delay-100">
+                <div data-role="doctor" class="role-card">
+                    <div class="flex flex-col items-center text-center">
+                        <span class="text-5xl mb-4">🩺</span>
+                        <h3 class="text-xl font-bold text-white">Doktorum</h3>
+                        <p class="text-sm text-gray-400 mt-2 flex-grow">Klinik süreçlerinizi güçlendirin ve teşhislerinize yapay zeka desteği alın.</p>
+                    </div>
+                    <ul class="space-y-3 text-left text-sm mt-6">
+                        <li class="flex items-start"><svg class="w-4 h-4 mr-3 mt-1 flex-shrink-0 accent-color" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>AI Destekli Görüntü Analizi</span></li>
+                        <li class="flex items-start"><svg class="w-4 h-4 mr-3 mt-1 flex-shrink-0 accent-color" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Otomatik Rapor Taslakları</span></li>
+                        <li class="flex items-start"><svg class="w-4 h-4 mr-3 mt-1 flex-shrink-0 accent-color" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Tıbbi LLM ile Vaka Tartışması</span></li>
+                    </ul>
+                    <span class="w-full mt-auto pt-4 text-accent-color font-semibold text-center continue-text">Bu rol ile devam et →</span>
+                </div>
+                <div data-role="student" class="role-card">
+                    <div class="flex flex-col items-center text-center">
+                        <span class="text-5xl mb-4">🎓</span>
+                        <h3 class="text-xl font-bold text-white">Öğrenciyim</h3>
+                        <p class="text-sm text-gray-400 mt-2 flex-grow">Derslerinize yapay zeka ile çalışın, notlarınızı yönetin ve toplulukla öğrenin.</p>
+                    </div>
+                    <ul class="space-y-3 text-left text-sm mt-6">
+                        <li class="flex items-start"><svg class="w-4 h-4 mr-3 mt-1 flex-shrink-0 accent-color" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Akıllı Ders Asistanı</span></li>
+                        <li class="flex items-start"><svg class="w-4 h-4 mr-3 mt-1 flex-shrink-0 accent-color" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Kişisel Not Kütüphanesi</span></li>
+                        <li class="flex items-start"><svg class="w-4 h-4 mr-3 mt-1 flex-shrink-0 accent-color" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>GPA Takibi ve Planlama</span></li>
+                    </ul>
+                    <span class="w-full mt-auto pt-4 text-accent-color font-semibold text-center continue-text">Bu rol ile devam et →</span>
+                </div>
+            </div>
+            <p class="text-center pt-8 text-sm text-gray-400 fade-in delay-200">
+                Zaten üye misiniz? <a href="#" id="show-login" class="font-semibold accent-color hover:underline">Giriş Yapın</a>
+            </p>
+        </div>
+
+        <div id="register-form-view" class="view" data-auth-view="register">
+            <div class="text-center space-y-2 fade-in">
+                <img src="static/img/logo.png" alt="ASYA Logo" class="h-16 w-16 mx-auto mb-2">
+                <h1 id="register-title" class="text-2xl font-bold text-white">Aramıza Hoş Geldiniz</h1>
+                <p id="register-subtitle" class="text-gray-400"></p>
+            </div>
+            <form id="register-form" data-form="auth-register" data-endpoint="/api/auth/register" data-method="POST">
+                <input type="hidden" name="csrf_token" value="" data-form-csrf>
+                <div id="dynamic-form" class="space-y-4 pt-6 fade-in delay-100">
+                    <!-- dynamic-slot:register-form-fields JS veya backend ile rol bazlı alanları buraya ekleyin. -->
+                </div>
+                <div class="pt-6 space-y-4 fade-in delay-200">
+                    <button type="submit" class="main-button w-full text-gray-900 font-bold py-3 px-10 rounded-lg text-lg">Kaydı Tamamla</button>
+                </div>
+            </form>
+            <div id="register-error" class="error-message"></div>
+            <p class="text-center pt-6 text-sm text-gray-400 fade-in delay-300">
+                <a href="#" id="back-to-roles" class="font-semibold text-gray-400 hover:text-white">‹ Rol seçimine geri dön</a>
+            </p>
+        </div>
+
+        <div id="reset-password-view" class="view" data-auth-view="reset-password">
+            <div class="text-center space-y-2 fade-in">
+                <h1 class="text-3xl font-bold text-white">Şifremi Unuttum</h1>
+                <p class="text-gray-400">Lütfen kayıtlı e-posta adresinizi girin.</p>
+            </div>
+            <form id="reset-password-form" data-form="auth-password-reset" data-endpoint="/api/auth/password-reset" data-method="POST">
+                <input type="hidden" name="csrf_token" value="" data-form-csrf>
+                <div class="space-y-4 pt-6 fade-in delay-100">
+                    <input type="email" id="reset-email" name="email" placeholder="E-posta Adresi" class="form-input w-full p-3 rounded-lg text-white" required autocomplete="email">
+                </div>
+                <div class="pt-6 space-y-4 fade-in delay-200">
+                    <button type="submit" class="main-button w-full text-gray-900 font-bold py-3 px-10 rounded-lg text-lg">Sıfırlama E-postası Gönder</button>
+                </div>
+            </form>
+            <div id="reset-error" class="error-message"></div>
+            <p class="text-center pt-6 text-sm text-gray-400 fade-in delay-300">
+                <a href="#" id="show-login-from-reset" class="font-semibold text-gray-400 hover:text-white">‹ Giriş ekranına geri dön</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="message-modal-overlay" class="modal-overlay">
+    <div class="modal-content">
+        <h3 id="modal-title" class="text-xl font-bold mb-3 text-white"></h3>
+        <p id="modal-message" class="text-sm text-gray-300 mb-6"></p>
+        <button id="modal-close-btn" class="main-button w-full text-gray-900 font-bold py-2 rounded-lg">Kapat</button>
+    </div>
+</div>
+<div id="loading-modal-overlay" class="modal-overlay">
+    <div class="modal-content !p-12 !max-w-[200px] text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent-color mx-auto"></div>
+        <p class="mt-4 text-gray-300 text-sm">İşleniyor...</p>
+    </div>
+</div>
+
+    </main>
+
+    
+
+    
+<script type="module" src="static/js/pages/login.js"></script>
+
+</body>
+</html>
